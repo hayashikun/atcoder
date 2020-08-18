@@ -1,5 +1,5 @@
 [package]
-name = "abc173"
+name = "atcoder"
 version = "0.1.0"
 authors = ["Ryosuke Hayashi <hayashi@hayashikun.com>"]
 edition = "2018"

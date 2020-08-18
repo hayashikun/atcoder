@@ -8,10 +8,6 @@ use proconio::input;
 use proconio::marker::Chars;
 use std::cmp::{Ordering, Reverse};
 
-fn main() {
-    abc173_d();
-}
-
 fn abc173_d() {
     input! {
         n: usize,
@@ -19,17 +15,9 @@ fn abc173_d() {
     }
     aa.sort_by_key(|&x| Reverse(x));
     println!("{:?}", aa);
-    let mut comfort: usize = 0;
+    // let mut comfort: usize = 0;
     let mut circle: Vec<usize> = Vec::new();
-    for a in aa {
-        let diff = circle.iter().map(|c| c - a);
-        let max = diff.max().unwrap_or(0).clone();
-        if let Some((idx, _)) = diff.enumerate().find(|(i, d)| *d == max) {
-            circle.insert(idx, a);
-        } else {
-            circle.push(a)
-        }
-    }
+    for a in aa {}
     println!("{:?}", circle);
 }
 
@@ -122,3 +110,6 @@ fn abc173_a() {
         println!("{}", ((n / 1000) + 1) * 1000 - n)
     }
 }
+
+#[test]
+fn test_abc173_a() {}
