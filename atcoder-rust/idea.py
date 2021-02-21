@@ -28,13 +28,19 @@ def _make_configuration_elm(name, label):
     return ElementTree.XML(_config_template.format(name=name, label=label))
 
 
-def run(name):
+def runner(name):
     labels = [f[0] for f in sorted(os.listdir(os.path.join(os.path.dirname(__file__), name, "src", "bin")))]
     if len(labels) == 0:
         raise FileNotFoundError
 
     tree = ElementTree.parse(workspace_path)
     root = tree.getroot()
+
+    component_names = [c.get("name") for c in root.iterfind("component")]
+    if "CargoProjects" not in component_names:
+        elm = ElementTree.Element("component", attrib={"name": "CargoProjects"})
+        root.append(elm)
+
     for component in root.iterfind("component"):
         if component.get("name") == "CargoProjects":
             elm = ElementTree.Element("cargoProject", attrib={"FILE": f"$PROJECT_DIR$/{name}/Cargo.toml"})
@@ -45,5 +51,23 @@ def run(name):
     tree.write(workspace_path)
 
 
+def clean():
+    tree = ElementTree.parse(workspace_path)
+    root = tree.getroot()
+    for component in root.iterfind("component"):
+        if component.get("name") == "CargoProjects":
+            for elm in component.iterfind("cargoProject"):
+                component.remove(elm)
+        if component.get("name") == "RunManager":
+            for elm in component.iterfind("configuration"):
+                if elm.attrib["type"] == "CargoCommandRunConfiguration" \
+                        and elm.attrib.get("temporary", "false") == "true":
+                    component.remove(elm)
+    tree.write(workspace_path)
+
+
 if __name__ == '__main__':
-    fire.Fire(run)
+    fire.Fire({
+        "runner": runner,
+        "clean": clean
+    })
