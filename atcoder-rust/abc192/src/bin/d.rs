@@ -1,4 +1,6 @@
-// base
+/*
+base
+*/
 
 use proconio::input;
 

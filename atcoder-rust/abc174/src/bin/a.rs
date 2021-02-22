@@ -3,8 +3,8 @@ use proconio::input;
 fn main() {
     input!(x: isize);
     if x >= 30 {
-        print!("Yes");
+        println!("Yes");
     } else {
-        print!("No");
+        println!("No");
     }
 }

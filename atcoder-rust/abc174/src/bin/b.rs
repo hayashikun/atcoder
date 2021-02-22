@@ -11,5 +11,5 @@ fn main() {
         .iter()
         .filter(|p| p[0].pow(2) + p[1].pow(2) <= d2)
         .count();
-    print!("{}", c)
+    println!("{}", c)
 }

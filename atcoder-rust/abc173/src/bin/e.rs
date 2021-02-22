@@ -43,5 +43,5 @@ fn main() {
     if c < 0 {
         c += div;
     }
-    print!("{}", c);
+    println!("{}", c);
 }

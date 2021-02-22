@@ -3,7 +3,7 @@ use proconio::input;
 fn main() {
     input!(k: isize);
     if k % 2 == 0 || k % 5 == 0 {
-        print!("-1");
+        println!("-1");
         return;
     }
     let mut a = 0;
@@ -16,7 +16,7 @@ fn main() {
         sum_m += m;
         sum_m %= k;
         if sum_m == 0 {
-            print!("{}", a + 1);
+            println!("{}", a + 1);
             break;
         }
         a += 1;

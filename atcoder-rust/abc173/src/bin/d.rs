@@ -16,5 +16,5 @@ fn main() {
     if aa.len() % 2 == 1 {
         total += aa[aa.len() / 2];
     }
-    print!("{}", total);
+    println!("{}", total);
 }
