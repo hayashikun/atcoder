@@ -1,4 +1,6 @@
-// TODO
+/*
+Multiple answers are allowed, so the test will fail.
+*/
 use proconio::input;
 
 fn main() {
