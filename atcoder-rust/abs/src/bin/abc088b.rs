@@ -22,5 +22,5 @@ fn main() {
             break;
         }
     }
-    print!("{}", a - b);
+    println!("{}", a - b);
 }

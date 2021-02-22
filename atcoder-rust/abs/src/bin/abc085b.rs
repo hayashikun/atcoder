@@ -7,5 +7,5 @@ fn main() {
         d: [usize; n]
     }
     let set: HashSet<usize> = d.into_iter().collect();
-    print!("{}", set.len());
+    println!("{}", set.len());
 }

@@ -4,5 +4,5 @@ fn main() {
     input!(a: usize);
     input!(b: usize, c: usize);
     input!(s: String);
-    print!("{} {}", a + b + c, s);
+    println!("{} {}", a + b + c, s);
 }

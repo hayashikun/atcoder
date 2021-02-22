@@ -8,7 +8,7 @@ fn main() {
         c: usize,
         x: usize
     }
-    print!("{}", f_abc(a, b, c, x));
+    println!("{}", f_abc(a, b, c, x));
 }
 
 fn f_abc(a: usize, b: usize, c: usize, x: usize) -> usize {

@@ -15,9 +15,9 @@ fn main() {
             }
         }
         if !ew {
-            print!("NO");
+            println!("NO");
             return;
         }
     }
-    print!("YES");
+    println!("YES");
 }

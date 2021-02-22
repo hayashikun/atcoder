@@ -13,7 +13,7 @@ fn main() {
             r += m;
         }
     }
-    print!("{}", r);
+    println!("{}", r);
 }
 
 fn d_sum(d: usize) -> usize {

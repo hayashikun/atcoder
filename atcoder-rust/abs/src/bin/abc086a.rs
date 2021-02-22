@@ -6,8 +6,8 @@ fn main() {
         b: isize
     }
     if a * b % 2 == 0 {
-        print!("Even");
+        println!("Even");
     } else {
-        print!("Odd");
+        println!("Odd");
     }
 }

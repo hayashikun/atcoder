@@ -22,9 +22,9 @@ fn main() {
 
     for i in 0..n {
         if (dxy[i] + dt[i]) % 2 != 0 || dt[i] < dxy[i] {
-            print!("No");
+            println!("No");
             return;
         }
     }
-    print!("Yes");
+    println!("Yes");
 }

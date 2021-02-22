@@ -1,3 +1,4 @@
+// TODO
 use proconio::input;
 
 fn main() {
@@ -6,7 +7,7 @@ fn main() {
         y: isize
     }
     let xyz = f_xyz(n, y);
-    print!("{} {} {}", xyz.0, xyz.1, xyz.2)
+    println!("{} {} {}", xyz.0, xyz.1, xyz.2)
 }
 
 fn f_xyz(n: isize, m: isize) -> (isize, isize, isize) {
