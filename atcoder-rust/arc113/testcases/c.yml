@@ -1,0 +1,48 @@
+---
+type: Batch
+timelimit: 2s
+match: Lines
+
+cases:
+  - name: sample1
+    in: |
+      accept
+    out: |
+      3
+  - name: sample2
+    in: |
+      atcoder
+    out: |
+      0
+  - name: sample3
+    in: |
+      anerroroccurred
+    out: |
+      16
+  - name: add1
+    in: |
+      abbcdeffgg
+    out: |
+      9
+  - name: add2
+    in: |
+      abbcdbefbbgh
+    out: |
+      6
+  - name: add3
+    in: |
+      abcdbccdee
+    out: |
+      3
+  - name: add4
+    in: |
+      abbcbeefbbgg
+    out: |
+      15
+  - name: add5
+    in: |
+      aab
+    out: |
+      1
+
+extend: []
