@@ -1,4 +1,5 @@
 import os
+import subprocess
 from xml.etree import ElementTree
 
 import fire
@@ -29,7 +30,11 @@ def _make_configuration_elm(name, label):
 
 
 def runner(name):
-    labels = [f[0] for f in sorted(os.listdir(os.path.join(os.path.dirname(__file__), name, "src", "bin")))]
+    labels = [
+        str(f).split(".", 1)[0]
+        for f in sorted(os.listdir(os.path.join(os.path.dirname(__file__), name, "src", "bin")))
+    ]
+
     if len(labels) == 0:
         raise FileNotFoundError
 
@@ -66,8 +71,14 @@ def clean():
     tree.write(workspace_path)
 
 
+def new(name):
+    subprocess.run(["cargo", "compete", "new", name])
+    runner(name)
+
+
 if __name__ == '__main__':
     fire.Fire({
         "runner": runner,
-        "clean": clean
+        "clean": clean,
+        "new": new
     })
