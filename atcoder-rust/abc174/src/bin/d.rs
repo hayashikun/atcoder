@@ -1,19 +1,32 @@
-// TODO
 use proconio::input;
-use std::cmp::min;
+
+fn run(n: usize, cs: String) -> usize {
+    let cs: Vec<char> = cs.chars().collect();
+    let mut w = 0;
+    let mut r = n - 1;
+
+    let mut count = 0;
+    while r > w {
+        if cs[w] == 'R' {
+            w += 1;
+            continue;
+        } else if cs[r] == 'W' {
+            r -= 1;
+            continue;
+        }
+        count += 1;
+        w += 1;
+        r -= 1;
+    }
+
+    return count;
+}
 
 fn main() {
     input! {
-        _n: usize,
+        n: usize,
         cs: String
     }
 
-    let mut cs: Vec<usize> = cs.chars().map(|c| if c == 'R' { 1 } else { 0 }).collect();
-
-    if cs.iter().all(|&c| c == cs[0]) {
-        print!("0");
-        return;
-    }
-
-    println!("{}", total);
+    println!("{}", run(n, cs));
 }
