@@ -4,7 +4,8 @@ from xml.etree import ElementTree
 
 import fire
 
-workspace_path = os.path.join(os.path.dirname(__file__), ".idea", "workspace.xml")
+root_dir = os.path.dirname(__file__)
+workspace_path = os.path.join(root_dir, ".idea", "workspace.xml")
 
 _config_template = """
 <configuration name="test [{name}-{label}]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
@@ -32,7 +33,7 @@ def _make_configuration_elm(name, label):
 def runner(name):
     labels = [
         str(f).split(".", 1)[0]
-        for f in sorted(os.listdir(os.path.join(os.path.dirname(__file__), name, "src", "bin")))
+        for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
     ]
 
     if len(labels) == 0:
@@ -76,9 +77,22 @@ def new(name):
     runner(name)
 
 
+def todo():
+    for d in sorted(os.listdir(root_dir)):
+        if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")):
+            continue
+        bin_dir = os.path.join(root_dir, d, "src", "bin")
+        for rs in os.listdir(bin_dir):
+            with open(os.path.join(bin_dir, rs)) as f:
+                line = f.readline()
+            if "TODO" in line:
+                print(f"[{d}-{rs.split('.')[0]}]: {os.path.join(bin_dir, rs)}")
+
+
 if __name__ == '__main__':
     fire.Fire({
         "runner": runner,
         "clean": clean,
-        "new": new
+        "new": new,
+        "todo": todo
     })
