@@ -8,8 +8,8 @@ root_dir = os.path.dirname(__file__)
 workspace_path = os.path.join(root_dir, ".idea", "workspace.xml")
 
 _config_template = """
-<configuration name="test [{name}-{label}]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-    <option name="command" value="compete test {name}-{label}" />
+<configuration name="{cmd} [{name}-{label}]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <option name="command" value="compete {cmd} {name}-{label}" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$/{name}" />
     <option name="channel" value="DEFAULT" />
     <option name="requiredFeatures" value="true" />
@@ -26,8 +26,8 @@ _config_template = """
 """
 
 
-def _make_configuration_elm(name, label):
-    return ElementTree.XML(_config_template.format(name=name, label=label))
+def _make_configuration_elm(cmd, name, label):
+    return ElementTree.XML(_config_template.format(cmd=cmd, name=name, label=label))
 
 
 def runner(name):
@@ -53,7 +53,10 @@ def runner(name):
             component.append(elm)
         if component.get("name") == "RunManager":
             for lb in labels:
-                component.append(_make_configuration_elm(name, lb))
+                component.append(_make_configuration_elm("submit", name, lb))
+            for lb in labels:
+                component.append(_make_configuration_elm("test", name, lb))
+
     tree.write(workspace_path)
 
 
