@@ -43,11 +43,6 @@ def runner(name):
     tree = ElementTree.parse(workspace_path)
     root = tree.getroot()
 
-    component_names = [c.get("name") for c in root.iterfind("component")]
-    if "CargoProjects" not in component_names:
-        elm = ElementTree.Element("component", attrib={"name": "CargoProjects"})
-        root.append(elm)
-
     for component in root.iterfind("component"):
         if component.get("name") == "CargoProjects":
             elm = ElementTree.Element("cargoProject", attrib={"FILE": f"$PROJECT_DIR$/{name}/Cargo.toml"})
@@ -67,7 +62,8 @@ def clean_xml():
     for component in root.iterfind("component"):
         if component.get("name") == "CargoProjects":
             for elm in component.iterfind("cargoProject"):
-                component.remove(elm)
+                if "example" not in elm.attrib["FILE"]:
+                    component.remove(elm)
         if component.get("name") == "RunManager":
             for elm in component.iterfind("configuration"):
                 if elm.attrib["type"] == "CargoCommandRunConfiguration" \
