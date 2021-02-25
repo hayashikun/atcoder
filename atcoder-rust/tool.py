@@ -85,9 +85,9 @@ def new(name):
 
 def todo():
     for d in sorted(os.listdir(root_dir)):
-        if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")):
-            continue
         bin_dir = os.path.join(root_dir, d, "src", "bin")
+        if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")) or not os.path.exists(bin_dir):
+            continue
         for rs in os.listdir(bin_dir):
             with open(os.path.join(bin_dir, rs)) as f:
                 line = f.readline()
