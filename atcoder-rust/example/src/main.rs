@@ -1,5 +1,6 @@
 mod dijkstra;
 mod mod_ex;
+mod prime;
 
 fn main() {
     println!("mod_ex");
@@ -34,5 +35,10 @@ fn main() {
             .map(|i| i.to_string())
             .collect::<Vec<String>>()
             .join("->")
-    )
+    );
+
+    println!("prime");
+    let n = 884;
+    let fs = prime::prime_factors(884);
+    println!("\tfactors of {}: {:?}", n, fs);
 }
