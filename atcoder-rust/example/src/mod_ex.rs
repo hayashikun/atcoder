@@ -22,16 +22,17 @@ mod tests {
 
     #[test]
     fn test_mod_ex() {
-        for (b, e, m) in vec![
-            (3, 4, 5),
-            (3, 100, 19),
-            (58979, 92653, 998244353),
-            (1000000007, 1000000007, 998244353),
+        for (b, e, m, c1) in vec![
+            (3, 4, 5, 1),
+            (3, 100, 19, 16),
+            (58979, 92653, 998244353, 518090637),
+            (1000000007, 1000000007, 998244353, 970844471),
         ] {
             let start = Instant::now();
-            let c = mod_ex(b, e, m);
+            let c2 = mod_ex(b, e, m);
             let end = start.elapsed();
-            println!("{} ^ {} % {} = {} [{}] ns", b, e, m, c, end.as_nanos());
+            assert_eq!(c1, c2);
+            println!("{} ^ {} % {} = {} [{} ns]", b, e, m, c2, end.as_nanos());
         }
     }
 }
