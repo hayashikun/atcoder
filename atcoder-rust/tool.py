@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 from xml.etree import ElementTree
 
 import fire
@@ -60,7 +61,7 @@ def runner(name):
     tree.write(workspace_path)
 
 
-def clean():
+def clean_xml():
     tree = ElementTree.parse(workspace_path)
     root = tree.getroot()
     for component in root.iterfind("component"):
@@ -73,6 +74,12 @@ def clean():
                         and elm.attrib.get("temporary", "false") == "true":
                     component.remove(elm)
     tree.write(workspace_path)
+
+
+def clean():
+    for _ in range(4):
+        clean_xml()
+        time.sleep(0.5)
 
 
 def new(name):
