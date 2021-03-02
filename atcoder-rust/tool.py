@@ -9,9 +9,9 @@ root_dir = os.path.dirname(__file__)
 workspace_path = os.path.join(root_dir, ".idea", "workspace.xml")
 
 _config_template = """
-<configuration name="{cmd} [{name}-{label}]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-    <option name="command" value="compete {cmd} {name}-{label}" />
-    <option name="workingDirectory" value="file://$PROJECT_DIR$/{name}" />
+<configuration name="{c} [{n}-{l}]" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <option name="command" value="compete {c} {n}-{l}" />
+    <option name="workingDirectory" value="file://$PROJECT_DIR$/{n}" />
     <option name="channel" value="DEFAULT" />
     <option name="requiredFeatures" value="true" />
     <option name="allFeatures" value="false" />
@@ -28,7 +28,7 @@ _config_template = """
 
 
 def _make_configuration_elm(cmd, name, label):
-    return ElementTree.XML(_config_template.format(cmd=cmd, name=name, label=label))
+    return ElementTree.XML(_config_template.format(c=cmd, n=name, l=label))
 
 
 def runner(name):
@@ -57,6 +57,7 @@ def runner(name):
 
 
 def clean_xml():
+    removed = False
     tree = ElementTree.parse(workspace_path)
     root = tree.getroot()
     for component in root.iterfind("component"):
@@ -64,17 +65,21 @@ def clean_xml():
             for elm in component.iterfind("cargoProject"):
                 if "example" not in elm.attrib["FILE"]:
                     component.remove(elm)
+                    removed = True
         if component.get("name") == "RunManager":
             for elm in component.iterfind("configuration"):
                 if elm.attrib["type"] == "CargoCommandRunConfiguration" \
                         and elm.attrib.get("temporary", "false") == "true":
                     component.remove(elm)
+                    removed = True
     tree.write(workspace_path)
+    return removed
 
 
 def clean():
-    for _ in range(4):
-        clean_xml()
+    for _ in range(10):
+        if not clean_xml():
+            break
         time.sleep(0.5)
 
 
