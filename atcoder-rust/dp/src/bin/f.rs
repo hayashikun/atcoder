@@ -47,6 +47,5 @@ fn main() {
         t: String
     }
 
-    // println!("{}", run(s, t));
-    print!("");
+    println!("{}", run(s, t));
 }
