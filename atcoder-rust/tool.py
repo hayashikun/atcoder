@@ -100,10 +100,18 @@ def todo():
                 print(f"[{d}-{rs.split('.')[0]}]: {os.path.join(bin_dir, rs)}")
 
 
+def download():
+    for d in sorted(os.listdir(root_dir)):
+        if not os.path.exists(os.path.join(root_dir, d, "testcases")):
+            continue
+        subprocess.run(["cargo", "compete", "download"], cwd=os.path.join(root_dir, d))
+
+
 if __name__ == '__main__':
     fire.Fire({
         "runner": runner,
         "clean": clean,
         "new": new,
-        "todo": todo
+        "todo": todo,
+        "download": download
     })
