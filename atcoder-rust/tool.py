@@ -31,7 +31,7 @@ def _make_configuration_elm(cmd, name, label):
     return ElementTree.XML(_config_template.format(c=cmd, n=name, l=label))
 
 
-def runner(name):
+def attach(name):
     labels = [
         str(f).split(".", 1)[0]
         for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
@@ -47,6 +47,23 @@ def runner(name):
         if component.get("name") == "CargoProjects":
             elm = ElementTree.Element("cargoProject", attrib={"FILE": f"$PROJECT_DIR$/{name}/Cargo.toml"})
             component.append(elm)
+
+    tree.write(workspace_path)
+
+
+def runner(name):
+    labels = [
+        str(f).split(".", 1)[0]
+        for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
+    ]
+
+    if len(labels) == 0:
+        raise FileNotFoundError
+
+    tree = ElementTree.parse(workspace_path)
+    root = tree.getroot()
+
+    for component in root.iterfind("component"):
         if component.get("name") == "RunManager":
             for lb in labels:
                 component.append(_make_configuration_elm("submit", name, lb))
@@ -109,6 +126,7 @@ def download():
 
 if __name__ == '__main__':
     fire.Fire({
+        "attach": attach,
         "runner": runner,
         "clean": clean,
         "new": new,
