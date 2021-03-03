@@ -41,4 +41,8 @@ cases:
     out: |
       Second
 
-extend: []
+extend:
+  - type: Text
+    path: "./k"
+    in: /in/*.txt
+    out: /out/*.txt

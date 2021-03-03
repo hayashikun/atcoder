@@ -15,4 +15,8 @@ cases:
     out: |
       Odd
 
-extend: []
+extend:
+  - type: Text
+    path: "./abc086a"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -54,4 +54,8 @@ cases:
     out: |
       102515160
 
-extend: []
+extend:
+  - type: Text
+    path: "./o"
+    in: /in/*.txt
+    out: /out/*.txt

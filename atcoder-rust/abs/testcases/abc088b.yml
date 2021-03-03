@@ -23,4 +23,8 @@ cases:
     out: |
       18
 
-extend: []
+extend:
+  - type: Text
+    path: "./abc088b"
+    in: /in/*.txt
+    out: /out/*.txt

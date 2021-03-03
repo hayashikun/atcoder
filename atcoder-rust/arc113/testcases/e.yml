@@ -49,4 +49,8 @@ cases:
       bbbbbbbbbaaaaaaaaaaaaaaa
       bbbbbbbbbbbbbbbbba
 
-extend: []
+extend:
+  - type: Text
+    path: "./e"
+    in: /in/*.txt
+    out: /out/*.txt

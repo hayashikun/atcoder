@@ -33,4 +33,8 @@ cases:
     out: |
       31
 
-extend: []
+extend:
+  - type: Text
+    path: "./q"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -34,4 +34,8 @@ cases:
     out: |
       123445622
 
-extend: []
+extend:
+  - type: Text
+    path: "./y"
+    in: /in/*.txt
+    out: /out/*.txt

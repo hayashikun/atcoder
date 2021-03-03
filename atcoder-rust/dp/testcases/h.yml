@@ -58,4 +58,8 @@ cases:
     out: |
       345263555
 
-extend: []
+extend:
+  - type: Text
+    path: "./h"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -26,4 +26,8 @@ cases:
     out: |
       0.3821815872
 
-extend: []
+extend:
+  - type: Text
+    path: "./i"
+    in: /in/*.txt
+    out: /out/*.txt

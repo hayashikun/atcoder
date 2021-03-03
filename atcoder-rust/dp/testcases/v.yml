@@ -53,4 +53,8 @@ cases:
       1
       1
 
-extend: []
+extend:
+  - type: Text
+    path: "./v"
+    in: /in/*.txt
+    out: /out/*.txt

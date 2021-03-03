@@ -37,4 +37,8 @@ cases:
       TLE x 0
       RE x 0
 
-extend: []
+extend:
+  - type: Text
+    path: "./b"
+    in: /in/*.txt
+    out: /out/*.txt

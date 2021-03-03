@@ -22,23 +22,9 @@ cases:
       1000000000000000000
     out: |
       1
-  - name: add1
-    in: |
-      4
-      4
-    out: |
-      1
-  - name: add2
-    in: |
-      4
-      3
-    out: |
-      0
-  - name: add3
-    in: |
-      999
-      1413
-    out: |
-      3
 
-extend: [ ]
+extend:
+  - type: Text
+    path: "./d"
+    in: /in/*.txt
+    out: /out/*.txt

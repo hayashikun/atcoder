@@ -39,4 +39,8 @@ cases:
     out: |
       157
 
-extend: []
+extend:
+  - type: Text
+    path: "./p"
+    in: /in/*.txt
+    out: /out/*.txt

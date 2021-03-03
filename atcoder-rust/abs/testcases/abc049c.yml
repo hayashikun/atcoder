@@ -20,4 +20,8 @@ cases:
     out: |
       NO
 
-extend: []
+extend:
+  - type: Text
+    path: "./abc049c"
+    in: /in/*.txt
+    out: /out/*.txt

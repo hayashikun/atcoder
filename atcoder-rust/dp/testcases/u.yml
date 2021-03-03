@@ -50,4 +50,8 @@ cases:
     out: |
       132
 
-extend: []
+extend:
+  - type: Text
+    path: "./u"
+    in: /in/*.txt
+    out: /out/*.txt

@@ -30,4 +30,8 @@ cases:
     out: |
       7
 
-extend: []
+extend:
+  - type: Text
+    path: "./d"
+    in: /in/*.txt
+    out: /out/*.txt
