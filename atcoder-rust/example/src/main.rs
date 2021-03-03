@@ -3,6 +3,7 @@ use std::fmt;
 mod dijkstra;
 mod mod_ex;
 mod prime;
+mod topological_sort;
 
 fn main() {
     println!("mod_ex");
@@ -41,8 +42,13 @@ fn main() {
 
     println!("prime");
     let n = 884;
-    let fs = prime::prime_factors(884);
+    let fs = prime::prime_factors(n);
     println!("\tfactors of {}: {:?}", n, fs);
+
+    println!("topological_sort");
+    let edges = vec![(0, 1), (0, 2), (2, 1), (1, 3), (2, 3)];
+    let (_, s) = topological_sort::topological_sort(4, edges.clone());
+    println!("\ttopological_sort of {:?}: {:?}", edges, s);
 
     println!("Size");
     fn p<T: fmt::Display>(n: &str, m: T) {
