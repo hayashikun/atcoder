@@ -31,7 +31,17 @@ def _make_configuration_elm(cmd, name, label):
     return ElementTree.XML(_config_template.format(c=cmd, n=name, l=label))
 
 
-def attach(name):
+def _get_name_from_filepath(filepath):
+    splits = filepath.rsplit(os.sep, 4)
+    if splits[-1].endswith(".rs") and os.path.exists(os.path.join(*splits[:-3], "testcases")):
+        return splits[-4]
+
+
+def attach(filepath):
+    name = _get_name_from_filepath(filepath)
+    if name is None:
+        name = input("Name: ")
+
     labels = [
         str(f).split(".", 1)[0]
         for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
@@ -51,7 +61,11 @@ def attach(name):
     tree.write(workspace_path)
 
 
-def runner(name):
+def runner(filepath):
+    name = _get_name_from_filepath(filepath)
+    if name is None:
+        name = input("Name: ")
+
     labels = [
         str(f).split(".", 1)[0]
         for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
