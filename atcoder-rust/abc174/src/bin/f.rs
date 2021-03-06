@@ -1,54 +1,70 @@
-// TODO (still TLE)
-use proconio::{fastout, input};
+use std::ops::{AddAssign, Sub};
+
+use itertools::Itertools;
+use proconio::{fastout, input, marker::*};
 
 #[fastout]
 fn main() {
     input! {
         n: usize,
         q: usize,
-        cs: [usize; n],
-        lr: [[usize; 2]; q]
+        cs: [Usize1; n],
+        lr: [(Usize1, Usize1); q]
     }
+    let lr = lr
+        .into_iter()
+        .enumerate()
+        .sorted_by_key(|&(_, (_, r))| r)
+        .collect_vec();
 
-    let mut cn = Vec::with_capacity(n);
-    unsafe {
-        cn.set_len(n);
-    }
-    for i in 0..n {
-        cn[i] = 0;
-    }
-    for c in cs.clone() {
-        cn[c - 1] += 1
-    }
+    let mut idx = vec![n; n];
+    let mut bit = vec![0; n + 1];
+    let mut ans = vec![0; q];
+    let mut cr = 0;
 
-    let mut block: Vec<(usize, usize)> = Vec::new();
-
-    for i in 0..n {
-        if cn[cs[i] - 1] < 2 {
-            continue;
-        }
-        cn[cs[i] - 1] -= 1;
-        for j in (i + 1)..n {
-            if cs[i] == cs[j] {
-                block.push((i + 1, j + 1));
-                break;
+    for &(i, (l, r)) in lr.iter() {
+        for j in cr..=r {
+            if idx[cs[j]] != n {
+                bit.add(idx[cs[j]], -1);
             }
+            idx[cs[j]] = j;
+            bit.add(idx[cs[j]], 1);
+        }
+
+        cr = r + 1;
+        ans[i] = if l > 0 {
+            bit.sum(r) - bit.sum(l - 1)
+        } else {
+            bit.sum(r)
         }
     }
 
-    for i in 0..q {
-        let l = lr[i][0];
-        let r = lr[i][1];
+    for a in ans {
+        println!("{}", a);
+    }
+}
 
-        let mut count = 0;
-        for &(bs, be) in block.iter() {
-            if be <= r && l <= bs {
-                count += 1;
-            }
-            if r <= bs {
-                break;
-            }
+trait BIT<T: Copy + Clone + Sub + AddAssign> {
+    fn add(&mut self, idx: usize, w: T);
+    fn sum(&self, idx: usize) -> T;
+}
+
+impl<T: Copy + Clone + Sub<Output = T> + AddAssign> BIT<T> for [T] {
+    fn add(&mut self, idx: usize, w: T) {
+        let mut j = (idx + 1) as i64;
+        while j < self.len() as i64 {
+            self[j as usize] += w;
+            j += j & -j;
         }
-        println!("{}", r - l + 1 - count);
+    }
+
+    fn sum(&self, idx: usize) -> T {
+        let mut i = (idx + 1) as i64;
+        let mut sum = self[0];
+        while i != 0 {
+            sum += self[i as usize];
+            i -= i & -i;
+        }
+        sum
     }
 }
