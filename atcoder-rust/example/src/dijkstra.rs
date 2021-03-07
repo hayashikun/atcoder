@@ -1,27 +1,21 @@
 use std::collections::BinaryHeap;
 
-// n edges
+// n nodes
 // from s to e
-// nodes (e1, e2, cost) (e1 <-> e2)
+// edges (e1, e2, cost) (e1 <-> e2)
 pub fn dijkstra(
     n: usize,
     s: usize,
     e: usize,
-    nodes: Vec<(usize, usize, usize)>,
+    edges: Vec<(usize, usize, usize)>,
 ) -> (isize, Vec<usize>) {
-    let mut costs: Vec<usize> = Vec::with_capacity(n);
-    let mut nearest: Vec<usize> = Vec::with_capacity(n);
+    let mut costs = vec![usize::max_value(); n];
+    let mut nearest = vec![s; n];
 
     // neighbors[from] = (to, cost)
-    let mut neighbors: Vec<Vec<(usize, usize)>> = Vec::with_capacity(n);
+    let mut neighbors: Vec<Vec<(usize, usize)>> = vec![Vec::new(); n];
 
-    for _ in 0..n {
-        costs.push(usize::max_value());
-        nearest.push(s);
-        neighbors.push(Vec::new());
-    }
-
-    for r in nodes {
+    for r in edges {
         neighbors[r.0].push((r.1, r.2));
         neighbors[r.1].push((r.0, r.2));
     }
