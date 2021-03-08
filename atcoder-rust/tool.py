@@ -37,11 +37,7 @@ def _get_name_from_filepath(filepath):
         return splits[-4]
 
 
-def attach(filepath):
-    name = _get_name_from_filepath(filepath)
-    if name is None:
-        name = input("Name: ")
-
+def _attach(name):
     labels = [
         str(f).split(".", 1)[0]
         for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
@@ -61,11 +57,15 @@ def attach(filepath):
     tree.write(workspace_path)
 
 
-def runner(filepath):
+def attach(filepath):
     name = _get_name_from_filepath(filepath)
     if name is None:
         name = input("Name: ")
 
+    _attach(name)
+
+
+def _runner(name):
     labels = [
         str(f).split(".", 1)[0]
         for f in sorted(os.listdir(os.path.join(root_dir, name, "src", "bin")))
@@ -85,6 +85,14 @@ def runner(filepath):
                 component.append(_make_configuration_elm("test", name, lb))
 
     tree.write(workspace_path)
+
+
+def runner(filepath):
+    name = _get_name_from_filepath(filepath)
+    if name is None:
+        name = input("Name: ")
+
+    _runner(name)
 
 
 def clean_xml():
@@ -116,7 +124,8 @@ def clean():
 
 def new(name):
     subprocess.run(["cargo", "compete", "new", name])
-    runner(name)
+    _attach(name)
+    _runner(name)
 
 
 def todo():
