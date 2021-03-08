@@ -125,10 +125,13 @@ def todo():
         if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")) or not os.path.exists(bin_dir):
             continue
         for rs in os.listdir(bin_dir):
-            with open(os.path.join(bin_dir, rs)) as f:
+            rs_file = os.path.join(bin_dir, rs)
+            with open(rs_file) as f:
                 line = f.readline()
             if "TODO" in line:
-                print(f"[{d}-{rs.split('.')[0]}]: {os.path.join(bin_dir, rs)}")
+                print(f"[{d}-{rs.split('.')[0]}]:"
+                      f"\thttps://atcoder.jp/contests/{d}/tasks/{d}_{rs.removesuffix('.rs')}"
+                      f"\n\tfile://{rs_file}")
 
 
 def download():
