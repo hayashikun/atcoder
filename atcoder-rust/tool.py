@@ -123,7 +123,10 @@ def clean():
 
 
 def new(name):
-    subprocess.run(["cargo", "compete", "new", name])
+    if os.path.exists(os.path.join(root_dir, name)):
+        print(f"contest {name} already exists")
+    else:
+        subprocess.run(["cargo", "compete", "new", name])
     _attach(name)
     _runner(name)
 
