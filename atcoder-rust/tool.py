@@ -136,7 +136,7 @@ def todo():
         bin_dir = os.path.join(root_dir, d, "src", "bin")
         if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")) or not os.path.exists(bin_dir):
             continue
-        for rs in os.listdir(bin_dir):
+        for rs in sorted(os.listdir(bin_dir)):
             rs_file = os.path.join(bin_dir, rs)
             with open(rs_file) as f:
                 line = f.readline()
