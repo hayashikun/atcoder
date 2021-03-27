@@ -3,6 +3,7 @@ use std::collections::BinaryHeap;
 // n nodes
 // from s to e
 // edges (e1, e2, cost) (e1 <-> e2)
+#[allow(dead_code)]
 pub fn dijkstra(
     n: usize,
     s: usize,

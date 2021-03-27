@@ -1,4 +1,5 @@
 // b^e % m
+#[allow(dead_code)]
 pub fn mod_ex(b: u128, e: u128, m: u128) -> u128 {
     if e == 0 {
         return 1;

@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub fn topological_sort(nodes_num: usize, edges: Vec<(usize, usize)>) -> (Vec<usize>, Vec<usize>) {
     let mut in_num = vec![0; nodes_num];
     let mut nodes: Vec<Vec<usize>> = vec![Vec::new(); nodes_num];

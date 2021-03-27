@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use num::integer::sqrt;
 
 //noinspection ALL
+#[allow(dead_code)]
 pub fn prime_factors(mut n: u128) -> BTreeMap<u128, u128> {
     let mut fs = BTreeMap::new();
 
