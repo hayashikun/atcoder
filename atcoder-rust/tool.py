@@ -1,9 +1,12 @@
+import gzip
+import json
 import os
 import subprocess
-import time
+from urllib import request
 from xml.etree import ElementTree
 
 import fire
+import time
 
 root_dir = os.path.dirname(__file__)
 workspace_path = os.path.join(root_dir, ".idea", "workspace.xml")
@@ -132,6 +135,12 @@ def new(name):
 
 
 def todo():
+    req = request.Request("https://kenkoooo.com/atcoder/resources/problem-models.json",
+                          headers={"Accept-Encoding": "gzip"})
+    with request.urlopen(req) as response:
+        content = gzip.decompress(response.read())
+        j = json.loads(content)
+
     for d in sorted(os.listdir(root_dir)):
         bin_dir = os.path.join(root_dir, d, "src", "bin")
         if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")) or not os.path.exists(bin_dir):
@@ -141,8 +150,15 @@ def todo():
             with open(rs_file) as f:
                 line = f.readline()
             if "TODO" in line:
-                print(f"[{d}-{rs.split('.')[0]}]:"
-                      f"\thttps://atcoder.jp/contests/{d}/tasks/{d}_{rs.removesuffix('.rs')}"
+                # TODO: detecting alias in Cargo.toml
+                name = f"{d}_{rs.split('.')[0]}"
+                difficulty = "???"
+                try:
+                    difficulty = j[name]["difficulty"]
+                except KeyError:
+                    pass
+                print(f"[{name}]: {difficulty}"
+                      f"\n\thttps://atcoder.jp/contests/{d}/tasks/{d}_{rs.removesuffix('.rs')}"
                       f"\n\tfile://{rs_file}")
 
 
