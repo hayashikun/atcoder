@@ -2,11 +2,12 @@ import gzip
 import json
 import os
 import subprocess
+import time
 from urllib import request
 from xml.etree import ElementTree
 
 import fire
-import time
+import toml
 
 root_dir = os.path.dirname(__file__)
 workspace_path = os.path.join(root_dir, ".idea", "workspace.xml")
@@ -143,23 +144,27 @@ def todo():
 
     for d in sorted(os.listdir(root_dir)):
         bin_dir = os.path.join(root_dir, d, "src", "bin")
-        if not os.path.exists(os.path.join(root_dir, d, "Cargo.toml")) or not os.path.exists(bin_dir):
+        cargo_path = os.path.join(root_dir, d, "Cargo.toml")
+        if not os.path.exists(cargo_path) or not os.path.exists(bin_dir):
             continue
+        with open(cargo_path) as f:
+            cargo = toml.load(f)
+        problems = cargo["package"]["metadata"]["cargo-compete"]["bin"]
         for rs in sorted(os.listdir(bin_dir)):
             rs_file = os.path.join(bin_dir, rs)
             with open(rs_file) as f:
                 line = f.readline()
-            if "TODO" in line:
-                # TODO: detecting alias in Cargo.toml
-                name = f"{d}_{rs.split('.')[0]}"
-                difficulty = "???"
-                try:
-                    difficulty = j[name]["difficulty"]
-                except KeyError:
-                    pass
-                print(f"[{name}]: {difficulty}"
-                      f"\n\thttps://atcoder.jp/contests/{d}/tasks/{d}_{rs.removesuffix('.rs')}"
-                      f"\n\tfile://{rs_file}")
+            if "TODO" not in line:
+                continue
+            name = f"{d}-{rs.split('.')[0]}"
+            url = problems[name]["problem"]
+            key = os.path.split(url)[-1]
+            difficulty = "???"
+            try:
+                difficulty = j[key]["difficulty"]
+            except KeyError:
+                pass
+            print(f"[{name}]: {difficulty}\n\t{url}\n\tfile://{rs_file}")
 
 
 def download():
